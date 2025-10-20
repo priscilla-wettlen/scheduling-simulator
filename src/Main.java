@@ -9,18 +9,32 @@ import java.util.Scanner;
  * This models the execution of processes on a CPU.
  *
  * @author "Anna Brötzner, Malmö university"
- * @since 1.0
+ * @since 2.0
  */
 
 public class Main {
     public static void main(String[] args) {
         List<Process> allProcesses = new ArrayList<>();
-        allProcesses = loadProcesses("data/processes.txt");
+        LinkedList<Process> allProcesses = loadProcesses(System.getProperty("user.dir") + "/data/test.txt");
 
-        run(allProcesses);
+        SchedulingSchemes fcfs = new SchedulingSchemes("FCFS", false);
+
+        run(allProcesses, fcfs);
     }
 
-    public static void run(List<Process> listOfProcesses) {
+    // By default, the run()-method is called with quantum = 1.
+    public static void run(LinkedList<Process> listOfProcesses,
+                           SchedulingSchemes scheme) {
+        run(listOfProcesses, scheme, 1);
+    }
+
+    /** To do for VG:
+     * Implement the usage of quantum.
+     * run() should work for any (feasible) positive integer quantum.
+     */
+    public static void run(LinkedList<Process> listOfProcesses,
+                           SchedulingSchemes scheme,
+                           int quantum) {
         int n = listOfProcesses.size();
         List<Process> queue = new ArrayList<>();
         int index = 0;
@@ -29,8 +43,27 @@ public class Main {
         int completed = 0;
         int time = 0;
 
+        /**
+         * The following loop runs one time step at a time, until all processes are finished.
+         *
+         * To do:
+         * Implement the functionalities necessary to handle the queue of processes.
+         *
+         * Important:
+         * - Do not modify the variable time! It is supposed to mimic the time steps, one per iteration.
+         * - Please do not add additional print-statements for your hand-in
+         *   as this makes the verification of your output more difficult.
+         */
         while(completed < n) {
-            // add the processes that arrive now to the process list
+            // Set the scheduling scheme
+            Function<LinkedList<Process>, Process> schedulingScheme;
+            switch(scheme.name) {
+                default:
+                    schedulingScheme = SchedulingSchemes::fcfs;
+                    break;
+            }
+
+            // Add the processes that arrive now to the process list
             while (index < n && listOfProcesses.get(index).arrivalTime <= time) {
                 queue.add(listOfProcesses.get(index));
                 index++;
@@ -39,7 +72,6 @@ public class Main {
             /** To do:
              * Among all processes in the queue, find the process that shall be executed next
              * according to the chosen scheduling scheme.
-             * Do this for all scheduling algorithms.
              */
 
             // During this time step, the process is executed
@@ -100,51 +132,5 @@ public class Main {
         }
 
         return processes;
-    }
-
-    /** To do:
-     * Your task is to implement the following 4 functions
-     *
-     */
-
-    // First-Come First-Served
-    private static Process fcfs(List<Process> queue) {
-        Process pNext = new Process();
-        // add your code here
-        return pNext;
-    }
-
-    // Shortest Job Next
-    private static Process sjn(List<Process> queue) {
-        Process pNext = new Process();
-        // add your code here
-        return pNext;
-    }
-
-    // Shortest Remaining Time
-    private static Process srt(List<Process> queue) {
-        Process pNext = new Process();
-        // add your code here
-        return pNext;
-    }
-
-    // Round Robin
-    private static Process rr(List<Process> queue) {
-        Process pNext = new Process();
-        // add your code here
-        return pNext;
-    }
-
-    /** To do:
-     * For VG, implement Priority Scheduling also
-     *
-     * Add a comment here if you have implemented this function and want to be evaluated for VG
-     */
-
-    // Priority Scheduling
-    private static Process ps(List<Process> queue) {
-        Process pNext = new Process();
-        // add your code here
-        return pNext;
     }
 }

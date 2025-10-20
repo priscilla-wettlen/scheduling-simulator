@@ -27,12 +27,16 @@ public class SchedulingSchemes {
         this.preemptive = preemptive;
     }
 
+    /** To do:
+     * Modify the following functions to implement the scheduling schemes.
+     * Each function should return the process that is to be executed next according to the scheme.
+     */
+
     // First-Come First-Served
     public static Process fcfs(LinkedList<Process> queue) {
         Process pNext = new Process();
 
         // add your code here
-        pNext = queue.pop();
 
         return pNext;
     }
@@ -42,8 +46,6 @@ public class SchedulingSchemes {
         Process pNext = new Process();
 
         // add your code here
-        queue.sort(Comparator.comparingInt(BlankProcess::getBurstTime));
-        pNext = queue.pop();
 
         return pNext;
     }
@@ -53,24 +55,28 @@ public class SchedulingSchemes {
         Process pNext = new Process();
 
         // add your code here
-        queue.sort(Comparator.comparingInt(process -> process.getBurstTime() - process.getTimeInService()));
-        pNext = queue.pop();
+
         return pNext;
     }
 
     // Round Robin
     public static Process rr(LinkedList<Process> queue) {
         Process pNext = new Process();
+
         // add your code here
-        pNext = queue.pop();
 
         return pNext;
     }
 
+    /** To do for VG:
+     * Also implement Priority Scheduling.
+     */
     // Priority Scheduling
     public static Process ps(LinkedList<Process> queue) {
         Process pNext = new Process();
+
         // add your code here
+
         return pNext;
     }
 }
