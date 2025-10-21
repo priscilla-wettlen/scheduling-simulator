@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.function.Function;
 
 /**
  * This models the execution of processes on a CPU.
@@ -14,8 +16,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        List<Process> allProcesses = new ArrayList<>();
-        LinkedList<Process> allProcesses = loadProcesses(System.getProperty("user.dir") + "/data/test.txt");
+        LinkedList<Process> allProcesses = loadProcesses(System.getProperty("user.dir") + "/data/rr_ex1.txt");
 
         SchedulingSchemes fcfs = new SchedulingSchemes("FCFS", false);
 
@@ -102,8 +103,8 @@ public class Main {
      * each line contains 4 parameters, separated by semicolons:
      * id; arrivalTime; burstTime; priority
      */
-    private static List<Process> loadProcesses(String path) {
-        List<Process> processes = new ArrayList<>();
+    private static LinkedList<Process> loadProcesses(String path) {
+        LinkedList<Process> processes = new LinkedList<>();
         Process process;
         String id;
         int arrivalTime;
