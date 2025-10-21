@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,7 +35,7 @@ public class Main {
                            SchedulingSchemes scheme,
                            int quantum) {
         int n = listOfProcesses.size();
-        List<Process> queue = new ArrayList<>();
+        LinkedList<Process> queue = new LinkedList<>();
         int index = 0;
 
         Process pNext = new Process();
