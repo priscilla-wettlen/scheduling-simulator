@@ -36,9 +36,11 @@ public class SchedulingSchemes {
     public static Process fcfs(LinkedList<Process> queue) {
         Process pNext = new Process();
 
-        // add your code here
+        if(queue.isEmpty()){
+            return null;
+        }
 
-        return pNext;
+        return queue.getFirst();
     }
 
     // Shortest Job Next

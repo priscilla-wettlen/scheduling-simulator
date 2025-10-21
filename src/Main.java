@@ -17,15 +17,16 @@ public class Main {
         LinkedList<Process> allProcesses = loadProcesses(System.getProperty("user.dir") + "/data/rr_ex1.txt");
 
         SchedulingSchemes fcfs = new SchedulingSchemes("FCFS", false);
+        //SchedulingSchemes
 
-        run(allProcesses, fcfs);
+        run(allProcesses, fcfs, 1);
     }
 
     // By default, the run()-method is called with quantum = 1.
-    public static void run(LinkedList<Process> listOfProcesses,
-                           SchedulingSchemes scheme) {
-        run(listOfProcesses, scheme, 1);
-    }
+//    public static void run(LinkedList<Process> listOfProcesses,
+//                           SchedulingSchemes scheme) {
+//        run(listOfProcesses, scheme, 1);
+//    }
 
     /** To do for VG:
      * Implement the usage of quantum.
@@ -41,6 +42,8 @@ public class Main {
         Process pNext = new Process();
         int completed = 0;
         int time = 0;
+
+        Process currentProcess = null;
 
         /**
          * The following loop runs one time step at a time, until all processes are finished.
@@ -73,16 +76,20 @@ public class Main {
              * according to the chosen scheduling scheme.
              */
 
-            // During this time step, the process is executed
+            if (currentProcess == null && !queue.isEmpty()) {
+                currentProcess = SchedulingSchemes.fcfs(queue);
+            }
+
+
             /** To do:
              * Execute the process you have found.
              */
-            time++;
 
             // All other processes need to wait
             /** To do:
              * Set the other processes into waiting state.
              */
+
 
             /** To do:
              * If the process is finished, mark it as completed.
@@ -91,6 +98,24 @@ public class Main {
              * E.g., a process that starts at time 0 and needs 2 time periods to execute shall finish at time 2.
              *
              */
+            if (currentProcess != null) {
+                currentProcess.execute();
+
+                for (Process p : queue) {
+                    if (p != currentProcess) {
+                        p.waiting();
+                    }
+                }
+
+                if (currentProcess.getTimeInService() == currentProcess.getServiceTime()) {
+                    currentProcess.finish(time + 1);
+                    queue.remove(currentProcess);
+                    currentProcess = null;
+                    completed++;
+                }
+            }
+
+            time++;
         }
     }
 
