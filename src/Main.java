@@ -14,12 +14,12 @@ import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args) {
-        LinkedList<Process> allProcesses = loadProcesses(System.getProperty("user.dir") + "/data/rr_ex1.txt");
+        LinkedList<Process> allProcesses = loadProcesses(System.getProperty("user.dir") + "/data/sjn_ex1.txt");
 
         SchedulingSchemes fcfs = new SchedulingSchemes("FCFS", false);
-        //SchedulingSchemes
+        SchedulingSchemes sjn = new SchedulingSchemes("SJN", false);
 
-        run(allProcesses, fcfs, 1);
+        run(allProcesses, sjn,1);
     }
 
     // By default, the run()-method is called with quantum = 1.
@@ -60,6 +60,11 @@ public class Main {
             // Set the scheduling scheme
             Function<LinkedList<Process>, Process> schedulingScheme;
             switch(scheme.name) {
+                case "sjn":
+                    schedulingScheme = SchedulingSchemes::sjn;
+                    break;
+
+
                 default:
                     schedulingScheme = SchedulingSchemes::fcfs;
                     break;
@@ -77,7 +82,8 @@ public class Main {
              */
 
             if (currentProcess == null && !queue.isEmpty()) {
-                currentProcess = SchedulingSchemes.fcfs(queue);
+                //currentProcess = SchedulingSchemes.fcfs(queue);
+                currentProcess = SchedulingSchemes.sjn(queue);
             }
 
 

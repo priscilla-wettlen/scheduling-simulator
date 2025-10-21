@@ -34,7 +34,7 @@ public class SchedulingSchemes {
 
     // First-Come First-Served
     public static Process fcfs(LinkedList<Process> queue) {
-        Process pNext = new Process();
+        //Process pNext = new Process();
 
         if(queue.isEmpty()){
             return null;
@@ -45,11 +45,20 @@ public class SchedulingSchemes {
 
     // Shortest Job Next
     public static Process sjn(LinkedList<Process> queue) {
-        Process pNext = new Process();
+        if (queue.isEmpty()) {
+            return null;
+        }
 
-        // add your code here
+        Process temp = queue.get(0);
 
-        return pNext;
+       for(int i=1; i < queue.size(); i++){
+           Process current = queue.get(i);
+           if (current.getServiceTime() < temp.getServiceTime()) {
+               temp = current;
+           }
+       }
+
+        return temp;
     }
 
     // Shortest Remaining Time
